@@ -4,11 +4,12 @@ document.addEventListener('DOMContentLoaded',()=>{
     const gameDisplay =document.querySelector('.game-container')
     const ground =document.querySelector('.ground')
     const sky =document.querySelector('.sky')
-
+    
     let birdLeft = 220
     let birdBottom = 100
     let gravity = 2
     let isGameOver = false;
+    let gap = 500
 
 
 
@@ -44,22 +45,32 @@ document.addEventListener('DOMContentLoaded',()=>{
     let randomHeight = Math.random() * 60
     let obstacleBottom =randomHeight
      const obstacles =  document.createElement('div')
-     if(!isGameOver)obstacles.classList.add('obstacles')
+     const topObstacle = document.createElement('div')
+     if(!isGameOver)
+        {   obstacles.classList.add('obstacles')
+            topObstacle.classList.add('topObstacles')
+        }
      gameDisplay.appendChild(obstacles)
+    gameDisplay.appendChild(topObstacle)
      obstacles.style.left=obstacleLeft +'px'
      obstacles.style.bottom= obstacleBottom +'px'
+     topObstacle.style.left= obstacleLeft + 'px'
+     topObstacle.style.bottom= obstacleBottom + gap + 'px'
+     //top
 
      function moveObstacle(){
         obstacleLeft -=2
         obstacles.style.left = obstacleLeft+'px'
+        topObstacle.style.left = obstacleLeft+'px'
 
         if(obstacleLeft === -60)
         {
             gameDisplay.removeChild(obstacles)
+            gameDisplay.removeChild(topObstacle)
             
         }
         if(
-            obstacleLeft>200 && obstacleLeft<280 && birdLeft ===220 && birdBottom <obstacleBottom+153 ||
+            obstacleLeft>200 && obstacleLeft<280 && birdLeft ===220 && (birdBottom <obstacleBottom+153|| birdBottom>obstacleBottom+gap-200) ||
             
             birdBottom === 0)
         {
